@@ -35,8 +35,7 @@ void loop() {
 
 void onBtnPress() {
   Serial.println("Button Pressed");
-  if(!led.isOn()) led.on();
-  else led.off();
+  led.flash();
 }
 
 void onBtnPressUp() {

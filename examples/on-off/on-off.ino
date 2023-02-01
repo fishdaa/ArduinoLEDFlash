@@ -1,23 +1,29 @@
 #include <LEDFlash.h>
+#include <EasyButton.h>
 
-LEDFlash led(16);
+#define BUTTON_PIN 25
+#define LED_PIN 16
 
-#define BUTTON_PIN 26
+LEDFlash led(LED_PIN);
 
-void setup() {
-    Serial.begin(115200);
-    pinMode(BUTTON_PIN, INPUT_PULLUP);
+EasyButton button1(BUTTON_PIN);
+
+void setup()
+{
+  Serial.begin(115200);
+  button1.begin();
+  button1.onPressed(onBtnPress);
 }
 
-void loop() {
-	/* Always call this function in the loop for LEDFlash to work. */
-	led.update();
+void loop()
+{
+  led.update();
+  button1.read();
+}
 
-    /* Check if the button is pressed. */
-    if (digitalRead(BUTTON_PIN) == LOW) 
-    {
-        if (!led.isOn()) led.on();
-        else led.off();
-    }
-
+void onBtnPress()
+{
+  Serial.println("Button Pressed");
+  if(!led.isOn()) led.on();
+  else led.off();
 }
